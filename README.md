@@ -36,14 +36,17 @@ Something like this:
 
 
 # Directives
--------
+
 
 ## addtocart
 
 Renders an 'Add To Cart' Button
 
 ```
-<addtocart id="{{ item.id }}" name="{{ item.name }}" price="{{ item.price }}" data="{{ item }}">Add To Cart</addtocart>
+<addtocart id="{{ item.id }}"
+           name="{{ item.name }}"
+           price="{{ item.price }}"
+           data="{{ item }}">Add To Cart</addtocart>
 ```
 
 
