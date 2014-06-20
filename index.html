@@ -26,6 +26,69 @@
 
 <body ng-controller="main">
 
+<script type="text/ng-template" id="template/addtocart.html">
+    <div ng-hide="inCart()">
+            <a class="btn btn-lg btn-primary"
+    ng-click="ngCart.addItem(attrs.id, attrs.name, attrs.price, attrs.quantity, attrs.data)"
+    ng-transclude></a>
+            </div>
+    <div ng-show="inCart()">
+            This item is already in your cart
+    </div>
+</script>
+
+<script type="text/ng-template" id="template/cart.html">
+    <div class="table-responsive col-lg-12">
+
+        <table class="table table-striped ngCart cart" ng-show="ngCart.totalItems() > 0">
+
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>{{ ngCart.totalCost() | currency }}</th>
+            </tr>
+            </tfoot>
+            <tbody>
+            <tr ng-repeat="item in ngCart.getCart() track by $index">
+                <td><span ng-click="ngCart.removeItem($index)" class="glyphicon glyphicon-remove"></span></td>
+                <td>{{ item.name }}</td>
+                <td><span class="glyphicon glyphicon-minus" ng-class="{'disabled':item.quantity==1}"
+                          ng-click="ngCart.quantity(item, -1)"></span>&nbsp;&nbsp;
+                    {{ item.quantity | number }}&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-plus" ng-click="ngCart.quantity(item, 1)"></span></td>
+                <td>{{ item.price | currency}}</td>
+                <td>{{ item.price * item.quantity | currency }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</script>
+
+<script type="text/ng-template" id="template/summary.html">
+<div>{{ ngCart.totalItems() }}</div>
+<div>{{ ngCart.totalCost() | currency }}</div>
+</script>
+
+<style>
+    .ngCart.cart span[ng-click] {
+        cursor: pointer;
+    }
+    .ngCart.cart .glyphicon.disabled {
+        color:#aaa;
+    }
+</style>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
